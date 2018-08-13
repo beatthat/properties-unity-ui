@@ -1,0 +1,56 @@
+{
+  "name": "properties-unity-ui",
+  "scope": "beatthat",
+  "version": "1.0.0",
+  "description": "exposes properties of UnityEngine.UI components for property binding or simply to set/get property values",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -f *.tgz package-lock.json && cd test && npm run clean",
+    "template-update": "node scripts/template-update.js",
+    "pretest-install": "rm -f *.tgz",
+    "test-install": "npm pack && cp ${npm_package_name}-${npm_package_version}.tgz ${npm_package_name}-latest.tgz && cd test && npm run clean && npm install",
+    "test-cp2src": "cd test && node scripts/cp2src.js",
+    "test-overwrite2src": "cd test && node scripts/overwrite2src.js",
+    "docs-generate": "node scripts/docs-generate.js",
+    "version": "git add -A",
+    "postinstall": "node scripts/postinstall.js",
+    "postversion": "git push && git push --tags && npm run clean",
+    "//": {
+      "clean": "deletes all non source files, products of tests etc",
+      "template-update": "pulls the latest version of the https://github.com/beatthat/unpm-unity-package-template.git and syncs changes to this package",
+      "test-install": "installs the 'test' package, which can be used for development",
+      "test-cp2src": "copies changes from 'test' package back to package src but does NOT delete removed files",
+      "test-overwrite2src": "copies changes from 'test' package back to src. Deletes src before the copy, so effectively whatever is in test becomes the src",
+      "npm version [patch|minor|major]": "after everything commited, use npm version to push a tagged release with bumped version"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beatthat/properties-unity-ui.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beatthat/properties-unity-ui/issues"
+  },
+  "homepage": "https://github.com/beatthat/properties-unity-ui#readme",
+  "files": [
+    "index.js",
+    "scripts",
+    "src",
+    "Runtime",
+    "Samples",
+    "README.md",
+    "readmefiles"
+  ],
+  "dependencies": {
+    "color-assets": "github:beatthat/color-assets#semver:^1.0.0",
+    "path": "^0.12.7",
+    "property-bindings": "github:beatthat/property-bindings#semver:^1.0.0",
+    "transform-path-ext": "github:beatthat/transform-path-ext#semver:^1.0.0",
+    "unity-npm-utils": "github:beatthat/unity-npm-utils#semver:^1.0.0"
+  },
+  "devDependencies": {}
+}
