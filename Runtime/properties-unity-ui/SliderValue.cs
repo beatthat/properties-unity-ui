@@ -4,23 +4,24 @@ using UnityEngine.UI;
 namespace BeatThat.Properties.UnityUI
 {
     [RequireComponent(typeof(Slider))]
-	public class SliderValue : EditsFloat 
+    public class SliderValue : FloatProp 
 	{
 		public Slider m_slider;
 
-		public override float value 
-		{
-			get {
-				return this.slider.value;
-			}
-			set {
-				this.slider.value = value;
-			}
-		}
 
-		public override bool sendsValueObjChanged { get { return false; } }
+        protected override float GetValue()
+        {
+            return this.slider.value;
+        }
 
-		public override bool interactable {
+        protected override void _SetValue(float s)
+        {
+            this.slider.value = value;
+        }
+
+		public override bool sendsValueObjChanged { get { return true; } }
+
+		public bool interactable {
 			get {
 				return this.slider.interactable;
 			}
@@ -41,7 +42,7 @@ namespace BeatThat.Properties.UnityUI
 
 		private void OnValueChanged(float value)
 		{
-			SendValueChanged();
+            SendValueChanged(value);
 		}
 
 		override protected void Start()
@@ -50,6 +51,6 @@ namespace BeatThat.Properties.UnityUI
 			this.slider.onValueChanged.AddListener(this.OnValueChanged);
 		}
 
-	}
+    }
 }
 

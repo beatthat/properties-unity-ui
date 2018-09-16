@@ -13,7 +13,6 @@ namespace BeatThat.Properties.UnityUI
 
 		public Toggle m_toggle;
 
-
 		public override bool value 
 		{
 			get {
@@ -45,6 +44,13 @@ namespace BeatThat.Properties.UnityUI
 			base.Start ();
 			this.toggle.onValueChanged.AddListener(this.OnValueChanged);
 		}
+
+        public bool interactable
+        {
+            get { return this.toggle.interactable; }
+            set { this.toggle.interactable = value; }
+        }
+
 
 	}
 }
