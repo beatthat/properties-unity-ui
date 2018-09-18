@@ -1,3 +1,4 @@
+using BeatThat.TransformPathExt;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,23 +9,11 @@ namespace BeatThat.Properties.UnityUI
     /// property to a bool property
     /// </summary>
     [RequireComponent(typeof(Selectable))]
-    public class SelectableInteractableProperty : BoolProperty, IDrive<Selectable>
+    public class SelectableInteractableProperty : BoolProp, IDrive<Selectable>
 	{
 		public override bool sendsValueObjChanged { get { return false; } }
 
-		public override object valueObj { get { return this.value; } }
-
         public Selectable m_selectable;
-
-		public override bool value 
-		{
-			get {
-                return this.driven.interactable;
-			}
-			set {
-                this.driven.interactable = value;
-			}
-		}
 
         public Selectable driven
         {
@@ -38,11 +27,6 @@ namespace BeatThat.Properties.UnityUI
             }
         }
 
-        private void OnValueChanged(bool value)
-		{
-			SendValueChanged (value);
-		}
-
         public object GetDrivenObject()
         {
             return this.driven;
@@ -52,6 +36,21 @@ namespace BeatThat.Properties.UnityUI
         {
             m_selectable = null;
             return true;
+        }
+
+        protected override void EnsureValue(bool s)
+        {
+            this.driven.interactable = s;
+        }
+
+        protected override bool GetValue()
+        {
+            return this.driven.interactable;
+        }
+
+        protected override void _SetValue(bool s)
+        {
+            this.driven.interactable = s;
         }
     }
 }
