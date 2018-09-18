@@ -8,6 +8,10 @@ namespace BeatThat.Properties.UnityUI
 	{
 		public Slider m_slider;
 
+        override protected void EnsureValue(float s) 
+        {
+            this.slider.value = s;
+        }
 
         protected override float GetValue()
         {
@@ -16,7 +20,7 @@ namespace BeatThat.Properties.UnityUI
 
         protected override void _SetValue(float s)
         {
-            this.slider.value = value;
+            this.slider.value = s;
         }
 
 		public override bool sendsValueObjChanged { get { return true; } }
