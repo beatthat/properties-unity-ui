@@ -1,7 +1,7 @@
 {
   "name": "properties-unity-ui",
   "scope": "beatthat",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "exposes properties of UnityEngine.UI components for property binding or simply to set/get property values",
   "main": "index.js",
   "scripts": {
