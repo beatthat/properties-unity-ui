@@ -1,28 +1,37 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace BeatThat.Properties.UnityUI
 {
-    public class GraphicMaterial : HasMaterial 
+    public class GraphicMaterial : HasMaterial, IDrive<Graphic>
 	{
-		public Graphic m_graphic;
-
-		#region implemented abstract members of HasFloat
+		[FormerlySerializedAs("m_graphic")]public Graphic m_driven;
 
 		public override Material value 
 		{
 			get {
-				return this.graphic.material;
+                return this.driven.material;
 			}
 			set {
-				this.graphic.material = value;
+                this.driven.material = value;
 			}
 		}
 
-		#endregion
+        public Graphic graphic { get { return this.driven; } }
 
-		public Graphic graphic { get { return m_graphic?? (m_graphic = GetComponent<Graphic>()); } }
+        public Graphic driven { get { return m_driven ?? (m_driven = GetComponent<Graphic>()); } }
+    
+        public bool ClearDriven()
+        {
+            m_driven = null;
+            return true;
+        }
 
-	}
+        public object GetDrivenObject()
+        {
+            return this.driven;
+        }
+    }
 }
 
