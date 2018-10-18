@@ -1,40 +1,29 @@
-using BeatThat.Properties;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace BeatThat.Properties.UnityUI
 {
-	[RequireComponent(typeof(Toggle))]
-	public class ToggleValue : BoolProperty 
+    [RequireComponent(typeof(Toggle))]
+    public class ToggleValue : BoolProp, IDrive<Toggle>
 	{
 		public override bool sendsValueObjChanged { get { return false; } }
 
 		public override object valueObj { get { return this.value; } }
 
-		public Toggle m_toggle;
+        [FormerlySerializedAs("m_toggle")]public Toggle m_driven;
 
-		public override bool value 
-		{
-			get {
-				return this.toggle.isOn;
-			}
-			set {
-				this.toggle.isOn = value;
-			}
-		}
+        public Toggle toggle 
+        {
+            get {
+                return (m_driven != null) ?
+                    m_driven : (m_driven = GetComponent<Toggle>());
+            }
+        }
 
+        public Toggle driven { get { return this.toggle; } }
 
-		public Toggle toggle
-		{
-			get {
-				if(m_toggle == null) {
-					m_toggle = GetComponent<Toggle>();
-				}
-				return m_toggle;
-			}
-		}
-
-		private void OnValueChanged(bool value)
+        private void OnValueChanged(bool v)
 		{
 			SendValueChanged (value);
 		}
@@ -45,13 +34,31 @@ namespace BeatThat.Properties.UnityUI
 			this.toggle.onValueChanged.AddListener(this.OnValueChanged);
 		}
 
-        public bool interactable
+        protected override bool GetValue()
         {
-            get { return this.toggle.interactable; }
-            set { this.toggle.interactable = value; }
+            return this.toggle.isOn;
         }
 
+        protected override void _SetValue(bool v)
+        {
+            this.toggle.isOn = v;
+        }
 
-	}
+        protected override void EnsureValue(bool v)
+        {
+            this.toggle.isOn = v;
+        }
+
+        public object GetDrivenObject()
+        {
+            return this.driven;
+        }
+
+        public bool ClearDriven()
+        {
+            m_driven = null;
+            return true;
+        }
+    }
 }
 
