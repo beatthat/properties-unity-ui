@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace BeatThat.Properties.UnityUI
@@ -7,28 +8,16 @@ namespace BeatThat.Properties.UnityUI
     /// For using an image as a fill
     /// </summary>
     [RequireComponent(typeof(Image))]
-	public class ImageFill : HasFloat, IDrive<Image>
+    public class ImageFill : FloatProp, IDrive<Image>
 	{
-		public Image m_image;
+        [FormerlySerializedAs("m_image")]public Image m_driven;
+        public override bool sendsValueObjChanged { get { return false; } }
 
-		public Image driven { get { return this.image; } }
+        public override object valueObj { get { return this.value; } }
 
-		public override float value 
-		{
-			get {
-				return this.image.fillAmount;
-			}
-			set {
-				if(Mathf.Approximately(value, this.image.fillAmount)) {
-					return;
-				}
-				this.image.fillAmount = value;
-			}
-		}
+        public Image driven { get { return m_driven ?? (m_driven = GetComponent<Image>()); } }
 
-		public override bool sendsValueObjChanged { get { return false; } }
-
-		public Image image { get { return m_image?? (m_image = GetComponent<Image>()); } }
+        public Image image { get { return this.driven; } }
 
 		public object GetDrivenObject ()
 		{
@@ -37,12 +26,24 @@ namespace BeatThat.Properties.UnityUI
 
 		public bool ClearDriven ()
 		{
-			m_image = null;
+			m_driven = null;
 			return true;
 		}
 
+        protected override float GetValue()
+        {
+            return this.image.fillAmount;
+        }
 
+        protected override void _SetValue(float v)
+        {
+            this.image.fillAmount = v;
+        }
 
-	}
+        protected override void EnsureValue(float v)
+        {
+            this.image.fillAmount = v;
+        }
+    }
 }
 
