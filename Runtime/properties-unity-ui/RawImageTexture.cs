@@ -1,46 +1,57 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace BeatThat.Properties.UnityUI
 {
     [RequireComponent(typeof(RawImage))]
-    public class RawImageTexture : HasTexture, IHasUVRect
+    public class RawImageTexture : TextureProp, IDrive<RawImage>, IHasUVRect
     {
         #region IHasUVRect implementation
-        public Rect uvRect { get { return this.image.uvRect; } set { this.image.uvRect = value; } }
+        public Rect uvRect { get { return this.driven.uvRect; } set { this.driven.uvRect = value; } }
         #endregion
 
-        private RawImage m_image;
+        [FormerlySerializedAs("m_image")]private RawImage m_driven;
 
-        override public Texture value
+        public RawImage driven
         {
             get
             {
-                var i = this.image;
-                return i != null ? i.texture : null;
-            }
-            set
-            {
-                var i = this.image;
-                if(i != null)
-                {
-                    i.texture = value;
-                }
+                return (m_driven != null) ? m_driven : (m_driven = GetComponent<RawImage>());
             }
         }
 
-        private RawImage image
+        protected override Texture GetValue()
         {
-            get
+            var i = this.driven;
+            return i != null ? i.texture : null;
+        }
+
+        protected override void _SetValue(Texture s)
+        {
+            var i = this.driven;
+            if (i != null)
             {
-                if (m_image == null)
-                {
-                    m_image = GetComponent<RawImage>();
-                }
-                return m_image;
+                i.texture = s;
             }
         }
 
+
+        protected override void EnsureValue(Texture v)
+        {
+            this.driven.texture = v;
+        }
+
+        public object GetDrivenObject()
+        {
+            return this.driven;
+        }
+
+        public bool ClearDriven()
+        {
+            m_driven = null;
+            return true;
+        }
     }
 }
 

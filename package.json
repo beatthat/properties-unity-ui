@@ -48,7 +48,7 @@
   "dependencies": {
     "color-assets": "github:beatthat/color-assets#semver:^1.0.0",
     "path": "^0.12.7",
-    "property-bindings": "github:beatthat/property-bindings#semver:^1.1.0",
+    "property-bindings": "github:beatthat/property-bindings#semver:^1.2.1",
     "transform-path-ext": "github:beatthat/transform-path-ext#semver:^1.0.0",
     "unity-npm-utils": "github:beatthat/unity-npm-utils#semver:^1.0.0"
   },
