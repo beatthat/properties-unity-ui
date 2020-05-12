@@ -10,113 +10,6 @@ namespace BeatThat.Properties.UnityUI
     [AddComponentMenu("UI/Ext/FillableRawImage", 12)]
 	public class FillableRawImage : RawImage
     {
-//        [SerializeField] Texture m_Texture;
-//        [SerializeField] Rect m_UVRect = new Rect(0f, 0f, 1f, 1f);
-//
-//		protected FillableRawImage()
-//        {
-//            useLegacyMeshGeneration = false;
-//        }
-//
-//        /// <summary>
-//        /// Returns the texture used to draw this Graphic.
-//        /// </summary>
-//        public override Texture mainTexture
-//        {
-//            get
-//            {
-//                if (m_Texture == null)
-//                {
-//                    if (material != null && material.mainTexture != null)
-//                    {
-//                        return material.mainTexture;
-//                    }
-//                    return s_WhiteTexture;
-//                }
-//
-//                return m_Texture;
-//            }
-//        }
-//
-//        /// <summary>
-//        /// Texture to be used.
-//        /// </summary>
-//        public Texture texture
-//        {
-//            get
-//            {
-//                return m_Texture;
-//            }
-//            set
-//            {
-//                if (m_Texture == value)
-//                    return;
-//
-//                m_Texture = value;
-//                SetVerticesDirty();
-//                SetMaterialDirty();
-//            }
-//        }
-//
-//        /// <summary>
-//        /// UV rectangle used by the texture.
-//        /// </summary>
-//        public Rect uvRect
-//        {
-//            get
-//            {
-//                return m_UVRect;
-//            }
-//            set
-//            {
-//                if (m_UVRect == value)
-//                    return;
-//                m_UVRect = value;
-//                SetVerticesDirty();
-//            }
-//        }
-//
-//        /// <summary>
-//        /// Adjust the scale of the Graphic to make it pixel-perfect.
-//        /// </summary>
-//
-//        public override void SetNativeSize()
-//        {
-//            Texture tex = mainTexture;
-//            if (tex != null)
-//            {
-//                int w = Mathf.RoundToInt(tex.width * uvRect.width);
-//                int h = Mathf.RoundToInt(tex.height * uvRect.height);
-//                rectTransform.anchorMax = rectTransform.anchorMin;
-//                rectTransform.sizeDelta = new Vector2(w, h);
-//            }
-//        }
-
-//        protected override void OnPopulateMesh(VertexHelper vh)
-//        {
-//            Texture tex = mainTexture;
-//            vh.Clear();
-//            if (tex != null)
-//            {
-//                var r = GetPixelAdjustedRect();
-//                var v = new Vector4(r.x, r.y, r.x + r.width, r.y + r.height);
-//
-//                {
-//                    var color32 = color;
-//                    vh.AddVert(new Vector3(v.x, v.y), color32, new Vector2(m_UVRect.xMin, m_UVRect.yMin));
-//                    vh.AddVert(new Vector3(v.x, v.w), color32, new Vector2(m_UVRect.xMin, m_UVRect.yMax));
-//                    vh.AddVert(new Vector3(v.z, v.w), color32, new Vector2(m_UVRect.xMax, m_UVRect.yMax));
-//                    vh.AddVert(new Vector3(v.z, v.y), color32, new Vector2(m_UVRect.xMax, m_UVRect.yMin));
-//
-//                    vh.AddTriangle(0, 1, 2);
-//                    vh.AddTriangle(2, 3, 0);
-//                }
-//            }
-//        }
-
-
-
-
 		public enum Type
         {
             Simple,
@@ -170,10 +63,6 @@ namespace BeatThat.Properties.UnityUI
             Left,
         }
 
-
-
-
-
 		/// How the Image is drawn.
         [SerializeField] private Type m_Type = Type.Simple;
         public Type type { get { return m_Type; } set { if (SetPropertyUtility.SetStruct(ref m_Type, value)) SetVerticesDirty(); } }
@@ -207,12 +96,6 @@ namespace BeatThat.Properties.UnityUI
 
 		protected override void OnPopulateMesh(VertexHelper vh)
 		{
-//			if (overrideSprite == null)
-//			{
-//				base.OnPopulateMesh(vh);
-//				return;
-//			}
-
 			switch (type)
 			{
 			case Type.Simple:
@@ -236,25 +119,6 @@ namespace BeatThat.Properties.UnityUI
 		/// </summary>
 		void GenerateSimpleSprite(VertexHelper vh, bool lPreserveAspect)
 		{
-//			Vector4 v = GetDrawingDimensions(lPreserveAspect);
-//			var uv = (overrideSprite != null) ? Sprites.DataUtility.GetOuterUV(overrideSprite) : Vector4.zero;
-//
-//			var color32 = color;
-//			vh.Clear();
-//			vh.AddVert(new Vector3(v.x, v.y), color32, new Vector2(uv.x, uv.y));
-//			vh.AddVert(new Vector3(v.x, v.w), color32, new Vector2(uv.x, uv.w));
-//			vh.AddVert(new Vector3(v.z, v.w), color32, new Vector2(uv.z, uv.w));
-//			vh.AddVert(new Vector3(v.z, v.y), color32, new Vector2(uv.z, uv.y));
-//
-//			vh.AddTriangle(0, 1, 2);
-//			vh.AddTriangle(2, 3, 0);
-
-
-
-
-
-
-
 			Texture tex = mainTexture;
             vh.Clear();
             if (tex != null)
@@ -290,73 +154,6 @@ namespace BeatThat.Properties.UnityUI
 		private void GenerateSlicedSprite(VertexHelper toFill)
 		{
 			throw new NotImplementedException();
-//			if (!hasBorder)
-//			{
-//				GenerateSimpleSprite(toFill, false);
-//				return;
-//			}
-//
-//			Vector4 outer, inner, padding, border;
-//
-//			if (overrideSprite != null)
-//			{
-//				outer = Sprites.DataUtility.GetOuterUV(overrideSprite);
-//				inner = Sprites.DataUtility.GetInnerUV(overrideSprite);
-//				padding = Sprites.DataUtility.GetPadding(overrideSprite);
-//				border = overrideSprite.border;
-//			}
-//			else
-//			{
-//				outer = Vector4.zero;
-//				inner = Vector4.zero;
-//				padding = Vector4.zero;
-//				border = Vector4.zero;
-//			}
-//
-//			Rect rect = GetPixelAdjustedRect();
-//			border = GetAdjustedBorders(border / pixelsPerUnit, rect);
-//			padding = padding / pixelsPerUnit;
-//
-//			s_VertScratch[0] = new Vector2(padding.x, padding.y);
-//			s_VertScratch[3] = new Vector2(rect.width - padding.z, rect.height - padding.w);
-//
-//			s_VertScratch[1].x = border.x;
-//			s_VertScratch[1].y = border.y;
-//			s_VertScratch[2].x = rect.width - border.z;
-//			s_VertScratch[2].y = rect.height - border.w;
-//
-//			for (int i = 0; i < 4; ++i)
-//			{
-//				s_VertScratch[i].x += rect.x;
-//				s_VertScratch[i].y += rect.y;
-//			}
-//
-//			s_UVScratch[0] = new Vector2(outer.x, outer.y);
-//			s_UVScratch[1] = new Vector2(inner.x, inner.y);
-//			s_UVScratch[2] = new Vector2(inner.z, inner.w);
-//			s_UVScratch[3] = new Vector2(outer.z, outer.w);
-//
-//			toFill.Clear();
-//
-//			for (int x = 0; x < 3; ++x)
-//			{
-//				int x2 = x + 1;
-//
-//				for (int y = 0; y < 3; ++y)
-//				{
-//					if (!m_FillCenter && x == 1 && y == 1)
-//						continue;
-//
-//					int y2 = y + 1;
-//
-//					AddQuad(toFill,
-//						new Vector2(s_VertScratch[x].x, s_VertScratch[y].y),
-//						new Vector2(s_VertScratch[x2].x, s_VertScratch[y2].y),
-//						color,
-//						new Vector2(s_UVScratch[x].x, s_UVScratch[y].y),
-//						new Vector2(s_UVScratch[x2].x, s_UVScratch[y2].y));
-//				}
-//			}
 		}
 
 		/// <summary>
@@ -366,152 +163,6 @@ namespace BeatThat.Properties.UnityUI
 		void GenerateTiledSprite(VertexHelper toFill)
 		{
 			throw new NotImplementedException();
-
-//			Vector4 outer, inner, border;
-//			Vector2 spriteSize;
-//
-//			if (overrideSprite != null)
-//			{
-//				outer = Sprites.DataUtility.GetOuterUV(overrideSprite);
-//				inner = Sprites.DataUtility.GetInnerUV(overrideSprite);
-//				border = overrideSprite.border;
-//				spriteSize = overrideSprite.rect.size;
-//			}
-//			else
-//			{
-//				outer = Vector4.zero;
-//				inner = Vector4.zero;
-//				border = Vector4.zero;
-//				spriteSize = Vector2.one * 100;
-//			}
-//
-//			Rect rect = GetPixelAdjustedRect();
-//			float tileWidth = (spriteSize.x - border.x - border.z) / pixelsPerUnit;
-//			float tileHeight = (spriteSize.y - border.y - border.w) / pixelsPerUnit;
-//			border = GetAdjustedBorders(border / pixelsPerUnit, rect);
-//
-//			var uvMin = new Vector2(inner.x, inner.y);
-//			var uvMax = new Vector2(inner.z, inner.w);
-//
-//			var v = UIVertex.simpleVert;
-//			v.color = color;
-//
-//			// Min to max max range for tiled region in coordinates relative to lower left corner.
-//			float xMin = border.x;
-//			float xMax = rect.width - border.z;
-//			float yMin = border.y;
-//			float yMax = rect.height - border.w;
-//
-//			toFill.Clear();
-//			var clipped = uvMax;
-//
-//			// if either with is zero we cant tile so just assume it was the full width.
-//			if (tileWidth == 0)
-//				tileWidth = xMax - xMin;
-//
-//			if (tileHeight == 0)
-//				tileHeight = yMax - yMin;
-//
-//			if (m_FillCenter)
-//			{
-//				for (float y1 = yMin; y1 < yMax; y1 += tileHeight)
-//				{
-//					float y2 = y1 + tileHeight;
-//					if (y2 > yMax)
-//					{
-//						clipped.y = uvMin.y + (uvMax.y - uvMin.y) * (yMax - y1) / (y2 - y1);
-//						y2 = yMax;
-//					}
-//
-//					clipped.x = uvMax.x;
-//					for (float x1 = xMin; x1 < xMax; x1 += tileWidth)
-//					{
-//						float x2 = x1 + tileWidth;
-//						if (x2 > xMax)
-//						{
-//							clipped.x = uvMin.x + (uvMax.x - uvMin.x) * (xMax - x1) / (x2 - x1);
-//							x2 = xMax;
-//						}
-//						AddQuad(toFill, new Vector2(x1, y1) + rect.position, new Vector2(x2, y2) + rect.position, color, uvMin, clipped);
-//					}
-//				}
-//			}
-//
-//			if (hasBorder)
-//			{
-//				clipped = uvMax;
-//				for (float y1 = yMin; y1 < yMax; y1 += tileHeight)
-//				{
-//					float y2 = y1 + tileHeight;
-//					if (y2 > yMax)
-//					{
-//						clipped.y = uvMin.y + (uvMax.y - uvMin.y) * (yMax - y1) / (y2 - y1);
-//						y2 = yMax;
-//					}
-//					AddQuad(toFill,
-//						new Vector2(0, y1) + rect.position,
-//						new Vector2(xMin, y2) + rect.position,
-//						color,
-//						new Vector2(outer.x, uvMin.y),
-//						new Vector2(uvMin.x, clipped.y));
-//					AddQuad(toFill,
-//						new Vector2(xMax, y1) + rect.position,
-//						new Vector2(rect.width, y2) + rect.position,
-//						color,
-//						new Vector2(uvMax.x, uvMin.y),
-//						new Vector2(outer.z, clipped.y));
-//				}
-//
-//				// Bottom and top tiled border
-//				clipped = uvMax;
-//				for (float x1 = xMin; x1 < xMax; x1 += tileWidth)
-//				{
-//					float x2 = x1 + tileWidth;
-//					if (x2 > xMax)
-//					{
-//						clipped.x = uvMin.x + (uvMax.x - uvMin.x) * (xMax - x1) / (x2 - x1);
-//						x2 = xMax;
-//					}
-//					AddQuad(toFill,
-//						new Vector2(x1, 0) + rect.position,
-//						new Vector2(x2, yMin) + rect.position,
-//						color,
-//						new Vector2(uvMin.x, outer.y),
-//						new Vector2(clipped.x, uvMin.y));
-//					AddQuad(toFill,
-//						new Vector2(x1, yMax) + rect.position,
-//						new Vector2(x2, rect.height) + rect.position,
-//						color,
-//						new Vector2(uvMin.x, uvMax.y),
-//						new Vector2(clipped.x, outer.w));
-//				}
-//
-//				// Corners
-//				AddQuad(toFill,
-//					new Vector2(0, 0) + rect.position,
-//					new Vector2(xMin, yMin) + rect.position,
-//					color,
-//					new Vector2(outer.x, outer.y),
-//					new Vector2(uvMin.x, uvMin.y));
-//				AddQuad(toFill,
-//					new Vector2(xMax, 0) + rect.position,
-//					new Vector2(rect.width, yMin) + rect.position,
-//					color,
-//					new Vector2(uvMax.x, outer.y),
-//					new Vector2(outer.z, uvMin.y));
-//				AddQuad(toFill,
-//					new Vector2(0, yMax) + rect.position,
-//					new Vector2(xMin, rect.height) + rect.position,
-//					color,
-//					new Vector2(outer.x, uvMax.y),
-//					new Vector2(uvMin.x, outer.w));
-//				AddQuad(toFill,
-//					new Vector2(xMax, yMax) + rect.position,
-//					new Vector2(rect.width, rect.height) + rect.position,
-//					color,
-//					new Vector2(uvMax.x, uvMax.y),
-//					new Vector2(outer.z, outer.w));
-//			}
 		}
 
 		static void AddQuad(VertexHelper vertexHelper, Vector3[] quadPositions, Color32 color, Vector3[] quadUVs)
@@ -528,12 +179,10 @@ namespace BeatThat.Properties.UnityUI
 		static void AddQuad(VertexHelper vertexHelper, Vector2 posMin, Vector2 posMax, Color32 color, Vector2 uvMin, Vector2 uvMax)
 		{
 			int startIndex = vertexHelper.currentVertCount;
-
 			vertexHelper.AddVert(new Vector3(posMin.x, posMin.y, 0), color, new Vector2(uvMin.x, uvMin.y));
 			vertexHelper.AddVert(new Vector3(posMin.x, posMax.y, 0), color, new Vector2(uvMin.x, uvMax.y));
 			vertexHelper.AddVert(new Vector3(posMax.x, posMax.y, 0), color, new Vector2(uvMax.x, uvMax.y));
 			vertexHelper.AddVert(new Vector3(posMax.x, posMin.y, 0), color, new Vector2(uvMax.x, uvMin.y));
-
 			vertexHelper.AddTriangle(startIndex, startIndex + 1, startIndex + 2);
 			vertexHelper.AddTriangle(startIndex + 2, startIndex + 3, startIndex);
 		}
@@ -567,12 +216,6 @@ namespace BeatThat.Properties.UnityUI
 
 			if (m_FillAmount < 0.001f)
 				return;
-
-//			Vector4 v = GetDrawingDimensions(preserveAspect);
-//			Vector4 outer = overrideSprite != null ? Sprites.DataUtility.GetOuterUV(overrideSprite) : Vector4.zero;
-
-
-
 
 			//LARRY CHANGED
 			var r = GetPixelAdjustedRect();
@@ -895,12 +538,6 @@ namespace BeatThat.Properties.UnityUI
 			get
 			{
 				return 0;
-
-//				if (overrideSprite == null)
-//					return 0;
-//				if (type == Type.Sliced || type == Type.Tiled)
-//					return Sprites.DataUtility.GetMinSize(overrideSprite).x / pixelsPerUnit;
-//				return overrideSprite.rect.size.x / pixelsPerUnit;
 			}
 		}
 
@@ -913,12 +550,6 @@ namespace BeatThat.Properties.UnityUI
 			get
 			{
 				return 0;
-
-//				if (overrideSprite == null)
-//					return 0;
-//				if (type == Type.Sliced || type == Type.Tiled)
-//					return Sprites.DataUtility.GetMinSize(overrideSprite).y / pixelsPerUnit;
-//				return overrideSprite.rect.size.y / pixelsPerUnit;
 			}
 		}
 
@@ -929,81 +560,8 @@ namespace BeatThat.Properties.UnityUI
 		public virtual bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera)
 		{
 			return true;
-
-//			if (m_EventAlphaThreshold >= 1)
-//				return true;
-//
-//			Sprite sprite = overrideSprite;
-//			if (sprite == null)
-//				return true;
-//
-//			Vector2 local;
-//			RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPoint, eventCamera, out local);
-//
-//			Rect rect = GetPixelAdjustedRect();
-//
-//			// Convert to have lower left corner as reference point.
-//			local.x += rectTransform.pivot.x * rect.width;
-//			local.y += rectTransform.pivot.y * rect.height;
-//
-//			local = MapCoordinate(local, rect);
-//
-//			// Normalize local coordinates.
-//			Rect spriteRect = sprite.textureRect;
-//			Vector2 normalized = new Vector2(local.x / spriteRect.width, local.y / spriteRect.height);
-//
-//			// Convert to texture space.
-//			float x = Mathf.Lerp(spriteRect.x, spriteRect.xMax, normalized.x) / sprite.texture.width;
-//			float y = Mathf.Lerp(spriteRect.y, spriteRect.yMax, normalized.y) / sprite.texture.height;
-//
-//			try
-//			{
-//				return sprite.texture.GetPixelBilinear(x, y).a >= m_EventAlphaThreshold;
-//			}
-//			catch (UnityException e)
-//			{
-//				Debug.LogError("Using clickAlphaThreshold lower than 1 on Image whose sprite texture cannot be read. " + e.Message + " Also make sure to disable sprite packing for this sprite.", this);
-//				return true;
-//			}
 		}
 
-//		private Vector2 MapCoordinate(Vector2 local, Rect rect)
-//		{
-//			Rect spriteRect = sprite.rect;
-//			if (type == Type.Simple || type == Type.Filled)
-//				return new Vector2(local.x * spriteRect.width / rect.width, local.y * spriteRect.height / rect.height);
-//
-//			Vector4 border = sprite.border;
-//			Vector4 adjustedBorder = GetAdjustedBorders(border / pixelsPerUnit, rect);
-//
-//			for (int i = 0; i < 2; i++)
-//			{
-//				if (local[i] <= adjustedBorder[i])
-//					continue;
-//
-//				if (rect.size[i] - local[i] <= adjustedBorder[i + 2])
-//				{
-//					local[i] -= (rect.size[i] - spriteRect.size[i]);
-//					continue;
-//				}
-//
-//				if (type == Type.Sliced)
-//				{
-//					float lerp = Mathf.InverseLerp(adjustedBorder[i], rect.size[i] - adjustedBorder[i + 2], local[i]);
-//					local[i] = Mathf.Lerp(border[i], spriteRect.size[i] - border[i + 2], lerp);
-//					continue;
-//				}
-//				else
-//				{
-//					local[i] -= adjustedBorder[i];
-//					local[i] = Mathf.Repeat(local[i], spriteRect.size[i] - border[i] - border[i + 2]);
-//					local[i] += border[i];
-//					continue;
-//				}
-//			}
-//
-//			return local;
-//		}
     }
 }
 
